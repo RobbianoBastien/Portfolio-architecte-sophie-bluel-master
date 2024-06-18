@@ -222,3 +222,22 @@ a {
 	text-decoration: none;
 	color: black;
 }
+
+.edition-box{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	background-color: black;
+	margin: 0px;
+	height: 40px;
+}
+#edition-box{
+	display: none;
+}
+.edition{
+	color: white;
+	font-weight: 400;
+	font-size: 16px;
+}

@@ -89,3 +89,11 @@ async function filtercategorys() {
 }
 
 filtercategorys()
+
+const loged = window.localStorage.token;
+
+if (loged != null){
+    document.getElementById("edition-box").style.display = "flex";
+}
+
+console.log(loged)

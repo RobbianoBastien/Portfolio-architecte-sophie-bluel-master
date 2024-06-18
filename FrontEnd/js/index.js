@@ -13,7 +13,6 @@ async function getworks(){
   const response = await fetch ("http://localhost:5678/api/works");
   return await response.json();
 }
-getworks()
 
 
 
@@ -37,6 +36,34 @@ async function displayworks() {
 }
 displayworks();
 
+
+/* modal */
+
+const modalGalery = document.querySelector(".modal-galerie")
+
+function buildWorkModal(work) {
+  const figure = document.createElement ("figure");
+  figure.classList.add("modal-work")
+  modalGalery.appendChild(figure);
+  const img = document.createElement ("img");
+  img.classList.add("work-img")
+  figure.appendChild(img)
+  img.src = work.imageUrl
+  const trashcandiv = document.createElement ("div")
+  trashcandiv.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
+  figure.appendChild(trashcandiv)
+  trashcandiv.classList.add ("delete")
+  
+}
+
+
+async function displayWorksModal() {
+  const works = await getworks();
+  works.forEach((work) => {
+    buildWorkModal(work);
+  });
+}
+displayWorksModal();
 
 /* fonction return getcategorys */
 

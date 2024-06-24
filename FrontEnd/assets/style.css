@@ -125,7 +125,6 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
 .gallery {
 	width: 100%;
@@ -213,7 +212,7 @@ footer nav ul {
 }
 
 .button-project-box{
-	margin: 50px 0px;
+	margin: 80px 0px;
 	display: flex;
 	justify-content: center;
 	gap: 15px;
@@ -229,7 +228,6 @@ a {
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	gap: 10px;
 	background-color: black;
 	margin: 0px;
 	height: 40px;
@@ -245,10 +243,17 @@ a {
 	color: white;
 	font-weight: 400;
 	font-size: 16px;
+	cursor: pointer;
 }
 
-.modal-overlay{
+.open{
 	display: flex;
+	gap: 10px;
+}
+
+
+.modal-overlay{
+	display: none;
 	height: 100%;
 	width: 100%;
 	position: fixed;
@@ -299,4 +304,21 @@ a {
 }
 
 
+.fa-xmark{
+	cursor: pointer;
+}
+
+.project-conteneur{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.project-conteneur-login{
+	display: none;
+	margin-left: 30px;
+	gap: 10px;
+	cursor: pointer;
+}
 

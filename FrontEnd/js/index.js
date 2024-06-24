@@ -65,6 +65,27 @@ async function displayWorksModal() {
 }
 displayWorksModal();
 
+
+const ModalContainer = document.querySelector(".modal-overlay")
+const Close = document.querySelector(".fa-xmark")
+const Modal = document.querySelector(".modal")
+const Open = document.querySelector(".open")
+const Open2 = document.querySelector(".project-conteneur-login")
+
+
+function manageDisplayModal() {
+  Open.addEventListener("click", (e) => {
+    ModalContainer.style.display = "flex";
+  });
+  Open2.addEventListener("click", (e) => {
+    ModalContainer.style.display = "flex";
+  });
+  Close.addEventListener("click", (e) => {
+    ModalContainer.style.display = "none";
+  });
+}
+manageDisplayModal();
+
 /* fonction return getcategorys */
 
 
@@ -118,9 +139,20 @@ async function filtercategorys() {
 filtercategorys()
 
 const loged = window.localStorage.token;
+const textLogout = document.querySelector("#logout")
 
 if (loged != null){
     document.getElementById("edition-box").style.display = "flex";
+    document.querySelector(".project-conteneur-login").style.display = "flex"
+    textLogout.textContent = ("logout")
 }
 
+function logout() {
+ textLogout.addEventListener("click", (e) => {
+  localStorage.removeItem("token");
+ })
+}
+
+logout()
 console.log(loged)
+

@@ -53,7 +53,7 @@ function buildWorkModal(work) {
   trashcandiv.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
   figure.appendChild(trashcandiv)
   trashcandiv.classList.add ("delete")
-  
+  trashcandiv.id = work.id 
 }
 
 
@@ -62,29 +62,74 @@ async function displayWorksModal() {
   works.forEach((work) => {
     buildWorkModal(work);
   });
+  deletework()
 }
 displayWorksModal();
 
 
 const ModalContainer = document.querySelector(".modal-overlay")
-const Close = document.querySelector(".fa-xmark")
+const Close = document.querySelector("#close1")
+const Close2 = document.querySelector("#close2")
+const Return1 = document.querySelector("#return")
 const Modal = document.querySelector(".modal")
+const ModalAdd = document.querySelector(".modal-add")
 const Open = document.querySelector(".open")
 const Open2 = document.querySelector(".project-conteneur-login")
+const SwitchModal = document.querySelector(".button-modal")
 
 
 function manageDisplayModal() {
   Open.addEventListener("click", (e) => {
     ModalContainer.style.display = "flex";
+    Modal.style.display = "flex";
   });
   Open2.addEventListener("click", (e) => {
     ModalContainer.style.display = "flex";
+    Modal.style.display = "flex";
   });
   Close.addEventListener("click", (e) => {
     ModalContainer.style.display = "none";
   });
+  SwitchModal.addEventListener("click", (e) => {
+    Modal.style.display = "none";
+    ModalAdd.style.display = "flex";
+  });
+  Close2.addEventListener("click", (e) => {
+    ModalContainer.style.display = "none";
+    ModalAdd.style.display = "none";
+  });
+  Return1.addEventListener("click", (e) => {
+    Modal.style.display = "flex";
+    ModalAdd.style.display = "none";
+  });
 }
 manageDisplayModal();
+
+function deletework() {
+  const trashAll = document.querySelectorAll(".fa-trash-can");
+  console.log(trashAll)
+  trashAll.forEach((trash) => {
+    trash.addEventListener("click", (e) => {
+      const id = trash.id;
+      console.log(trash.id)
+      const init = {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      };
+      fetch("http://localhost:5678/api/works/1")
+        .then((response) => {
+          if (!response.ok) {
+            console.log("le delete n'a pas marché !");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("la delete a réussi voici la data :", data);
+        });
+    });
+  });
+}
+
 
 /* fonction return getcategorys */
 
@@ -156,3 +201,39 @@ function logout() {
 logout()
 console.log(loged)
 
+/*******Rajouter des images ********/
+
+const previewImg = document.querySelector(".modal-add-file img")
+const inputFile = document.querySelector(".modal-add-file input")
+const labelFile = document.querySelector(".modal-add-file label")
+const inconFile = document.querySelector(".modal-add-file .fa-image")
+const pFile = document.querySelector(".modal-add-file p")
+
+
+inputFile.addEventListener("change",()=>{
+  const file = inputFile.files[0]
+  console.log(file);
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e){
+      previewImg.src = e.target.result
+      previewImg.style.display = "flex"
+      labelFile.style.display = "none"
+      inconFile.style.display = "none"
+      pFile.style.display = "none"
+    }
+    reader.readAsDataURL(file);
+  }
+})
+
+async function displayCategoryModal (){
+  const select = document.querySelector(".modal-add select")
+  const categorys = await getcategorys()
+  categorys.forEach(category => {
+    const option = document.createElement("option")
+    option.value = category.id
+    option.textContent = category.name
+    select.appendChild(option)
+  })
+}
+displayCategoryModal()

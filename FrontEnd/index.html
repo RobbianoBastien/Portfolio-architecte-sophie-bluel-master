@@ -81,7 +81,7 @@
 <section class="modal-overlay">
 	<div class="modal">
 		<div class="close">
-			<i class="fa-solid fa-xmark"></i>
+			<i class="fa-solid fa-xmark fa-lg" id="close1"></i>
 		</div>
 		<h2  class="modal-title">Galerie photo</h2>
 		<div class="modal-galerie">
@@ -92,6 +92,33 @@
 			<img class="work-img" src="assets/images/villa-ferneze.png" alt="">
 		</figure>
 		</div>
+		<button class="button-modal">Ajouter une photo</button>
+	</div>
+	<div class="modal-add">
+		<div class="modal-add-icon">
+			<i class="fa-solid fa-arrow-left fa-lg" id="return"></i>
+			<i class="fa-solid fa-xmark fa-lg" id="close2"></i>
+		</div>
+		<h2>Ajout photo</h2>
+		<form>
+			<div class="modal-add-file">
+				<span><i class="fa-regular fa-image"></i></span>
+				<label class="modal-add-label" for="file">+ Ajouter photo</label>
+				<input type="file" class="modal-add-input" name="imageUrl">
+				<img src="#" class="modal-add-image" alt="Aperçut de l'image">
+				<p>jpg,png: 4mo max</p>
+			  </div>
+			<div class="modal-add-title-box">
+			<label for="title">Titre</label>
+			<input type="text" class="modal-add-title" name="title">
+			</div>
+			<div class="modal-add-category-box">
+			<label for="category">Catégorie</label>
+			<select name="categoryId" class="modal-add-category"></select>
+			</div>
+			<button class="modal-add-button" disabled>Valider</button>
+		</form>
+
 	</div>
 </section>
 <footer>

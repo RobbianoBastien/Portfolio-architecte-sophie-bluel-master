@@ -2,6 +2,9 @@ console.log("hello")
 
 const galleryConteneur = document.querySelector(".gallery")
 const buttonConteneur = document.querySelector(".button-project-box")
+const loged = window.localStorage.token;
+const textLogout = document.querySelector("#logout")
+
 
 
 
@@ -53,7 +56,7 @@ function buildWorkModal(work) {
   trashcandiv.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
   figure.appendChild(trashcandiv)
   trashcandiv.classList.add ("delete")
-  trashcandiv.id = work.id 
+  trashcandiv.setAttribute("id",work.id)
 }
 
 
@@ -105,30 +108,37 @@ function manageDisplayModal() {
 }
 manageDisplayModal();
 
+
 function deletework() {
-  const trashAll = document.querySelectorAll(".fa-trash-can");
-  console.log(trashAll)
-  trashAll.forEach((trash) => {
+  const trashcandivALL = document.querySelectorAll(".delete");
+  trashcandivALL.forEach((trash) => {
     trash.addEventListener("click", (e) => {
-      const id = trash.id;
-      console.log(trash.id)
-      const init = {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      };
-      fetch("http://localhost:5678/api/works/1")
+      const id = trash.getAttribute("id");
+      console.log(id)
+      console.log(loged)
+         fetch("http://localhost:5678/api/works/" + id,{
+          method: "DELETE",
+          headers: { 
+            "Authorization": `Bearer ${loged}`,
+              },
+        })
         .then((response) => {
-          if (!response.ok) {
-            console.log("le delete n'a pas marché !");
-          }
-          return response.json();
+          return response.json
         })
         .then((data) => {
           console.log("la delete a réussi voici la data :", data);
-        });
+          modalGalery.innerHTML = ""
+          galleryConteneur.innerHTML = ""
+          displayWorksModal()
+          displayworks()
+        })
+        .catch ((error) => { 
+          return error;
     });
   });
+})
 }
+
 
 
 /* fonction return getcategorys */
@@ -170,8 +180,8 @@ async function filtercategorys() {
       if (buttonid !== "0") {
         const worksfiltercategory = allworks.filter((categoryworks) => {
           return categoryworks.categoryId == buttonid;
-        })
-        worksfiltercategory.forEach((categoryworks) => {
+        }) 
+          worksfiltercategory.forEach((categoryworks) => {
           buildwork(categoryworks)
         })
       } else {
@@ -183,8 +193,7 @@ async function filtercategorys() {
 
 filtercategorys()
 
-const loged = window.localStorage.token;
-const textLogout = document.querySelector("#logout")
+
 
 if (loged != null){
     document.getElementById("edition-box").style.display = "flex";
@@ -210,7 +219,7 @@ const inconFile = document.querySelector(".modal-add-file .fa-image")
 const pFile = document.querySelector(".modal-add-file p")
 
 
-inputFile.addEventListener("change",()=>{
+inputFile.addEventListener("change",(e)=>{
   const file = inputFile.files[0]
   console.log(file);
   if (file) {
@@ -225,6 +234,7 @@ inputFile.addEventListener("change",()=>{
     reader.readAsDataURL(file);
   }
 })
+
 
 async function displayCategoryModal (){
   const select = document.querySelector(".modal-add select")

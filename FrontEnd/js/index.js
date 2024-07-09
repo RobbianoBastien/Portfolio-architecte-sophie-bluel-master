@@ -247,3 +247,48 @@ async function displayCategoryModal (){
   })
 }
 displayCategoryModal()
+
+const form = document.querySelector(".modal-add form")
+const title = document.querySelector(".modal-add #title")
+const category = document.querySelector(".modal-add #category")
+
+form.addEventListener("submit",async (e)=>{
+  e.preventDefault()
+  const formData = new FormData();
+    formData.append('title', title.value);
+    formData.append('category', category.value);
+    formData.append('image', inputFile.files[0]);
+  console.log(formData)
+  fetch("http://localhost:5678/api/works",{
+    method:"POST",
+    body: formData,
+    headers: { 
+      "Authorization": `Bearer ${loged}`,
+        },
+  })
+  .then(response => response.json())
+  .then(data =>{
+    console.log(data);
+    console.log("voici l'iamge ajouté",data)
+    modalGalery.innerHTML = ""
+    galleryConteneur.innerHTML = ""
+    displayWorksModal()
+    displayworks()
+    resetform()
+  })
+  .catch(error => console.log("voici l'erreur",error))
+})
+
+function resetform (){
+  const category = document.getElementById("category")
+  const title = document.getElementById ("title")
+  const img = document.getElementById ("file")
+  title.value = ""
+  category.value = "1"
+  img.value = null
+  previewImg.src = null
+  previewImg.style.display = "none"
+  labelFile.style.display = "flex"
+  inconFile.style.display = "flex"
+  pFile.style.display = "flex"
+}

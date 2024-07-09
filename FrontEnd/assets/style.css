@@ -343,7 +343,7 @@ a {
 }
 
 .button-modal{
-	margin-top: 60px;
+	margin-top: 30px;
 	border-radius: 60px;
 	border: solid 1px;
 	font-size: 14px;
@@ -470,7 +470,7 @@ a {
 }
 
 .modal-add-button{
-	margin-top: 50px;
+	margin-top: 30px;
 	padding: 10px;
 	color: white;
 	background-color: #A7A7A7;
@@ -482,3 +482,11 @@ a {
 	border: none;
 
 }
+
+.separator{
+	margin-top: 50px;
+	width: 100%;
+	border-top: 1px solid #B3B3B3;
+
+}
+

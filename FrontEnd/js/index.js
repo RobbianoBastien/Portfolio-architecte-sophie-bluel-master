@@ -115,7 +115,7 @@ function manageDisplayModal() {
 manageDisplayModal();
 
 
-async function deletework() {
+function deletework() {
   const trashcandivALL = document.querySelectorAll(".delete");
   trashcandivALL.forEach((trash) => {
     trash.addEventListener("click", (e) => {
@@ -128,16 +128,15 @@ async function deletework() {
             "Authorization": `Bearer ${loged}`,
               },
         })
-        .then((response) => {
-           return response.json()
-        })
-        .then((data) => {
+        .then(async(data)  => {
           console.log("la delete a réussi voici la data :", data);
           modalGalery.innerHTML = ""
           galleryConteneur.innerHTML = ""
-          getworks()
-          displayWorksModal()
-          displayworks()
+          await getworks().then(() => {
+            displayWorksModal()
+            displayworks()
+            resetform()
+        })
         })
         .catch ((error) => { 
           return error;
@@ -231,12 +230,11 @@ console.log(loged)
 
 function Filevalidation(){
   if (inputFile.files.length > 0) {
-      for (const i = 0; i <= inputFile.files.length - 1; i++) {
-
+      for (let i = 0; i <= inputFile.files.length - 1; i++) {
           const fileSize = inputFile.files.item(i).size;
           const file = Math.round((fileSize / 1024));
           if (file >= 4096) {
-            inputFile.files = 0;
+           inputFile = 0
           }
       }
   }
@@ -296,15 +294,16 @@ form.addEventListener("submit",async (e)=>{
         },
   })
   .then(response => response.json())
-  .then(data =>{
+  .then(async data =>{
     console.log(data);
     console.log("voici l'iamge ajouté",data);
     modalGalery.innerHTML = "";
     galleryConteneur.innerHTML = "";
-    getworks();
-    displayWorksModal();
-    displayworks();
-    resetform();
+    await getworks().then(() => {
+      displayWorksModal()
+      displayworks()
+      resetform()
+  })
   })
   .catch(error => console.log("voici l'erreur",error))
 })
@@ -316,7 +315,7 @@ function resetform (){
   title.value = ""
   category.value = "1"
   img.value = null
-  previewImg.src = null
+  previewImg.src = ""
   previewImg.style.display = "none"
   labelFile.style.display = "flex"
   inconFile.style.display = "flex"

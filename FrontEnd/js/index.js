@@ -233,15 +233,27 @@ function Filevalidation(){
       for (let i = 0; i <= inputFile.files.length - 1; i++) {
           const fileSize = inputFile.files.item(i).size;
           const file = Math.round((fileSize / 1024));
-          if (file >= 4096) {
-           inputFile = 0
+          const allowedTypes = ['image/jpeg', 'image/png'];
+          const allowedExtensions = ['jpg', 'jpeg', 'png'];
+          const fileExtension = inputFile.files[i].name.split('.').pop().toLowerCase();
+          const isValidExtension = allowedExtensions.includes(fileExtension);
+          console.log(allowedExtensions.includes(inputFile.files[i].type))
+          if (file >= 4096 || isValidExtension == false || !allowedTypes.includes(inputFile.files[i].type)) {
+           inputFile[i] = null
+           console.log("aled")
+           alert('Veuillez télécharger une image au format .png, .jpg ou .jpeg.')
+           return false
+          }
+          else{
+            return true
           }
       }
   }
 }
 
+
 const previewImg = document.querySelector(".modal-add-file img")
-const inputFile = document.querySelector(".modal-add-file input")
+let inputFile = document.querySelector(".modal-add-file input")
 const labelFile = document.querySelector(".modal-add-file label")
 const inconFile = document.querySelector(".modal-add-file .fa-image")
 const pFile = document.querySelector(".modal-add-file p")
@@ -249,7 +261,10 @@ const pFile = document.querySelector(".modal-add-file p")
 
 inputFile.addEventListener("change",(e)=>{
   const file = inputFile.files[0]
-  Filevalidation()
+  const response = Filevalidation()
+  if(!response){
+      return
+  }
   console.log(file);
   if (file) {
     const reader = new FileReader();
@@ -282,6 +297,10 @@ const category = document.querySelector(".modal-add #category")
 
 form.addEventListener("submit",async (e)=>{
   e.preventDefault()
+  if(title.value ==""){
+    alert('titre vide')
+    return
+  }
   const formData = new FormData();
     formData.append('title', title.value);
     formData.append('category', category.value);
